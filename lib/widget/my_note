@@ -1,0 +1,69 @@
+//get data array in docs
+// Future<List<Map<String, dynamic>>> getMessages() async{
+//   List<Map<String, dynamic>> tempList=[];
+//
+//   var data;
+//   List.from(widget.conInfo['messages']).forEach((element) {
+//     data = element;
+//     tempList.add(data);
+//   });
+//   // print(conList.toString());
+//   return tempList;
+// }
+
+//update array
+// _reference.doc(widget.conInfo['cid']).update({
+    //   'lastTime': byText['time'],
+    //   'lastMes': byText['mesDes'],
+    //   'messages': FieldValue.arrayUnion([byText]),
+    // });
+
+//get data array in docs
+// List.from(widget.conInfo['members']).forEach((element) {
+    //   memberList.add(UserModel.fromJson(element));
+    // });
+
+//check isFriend
+Future<bool> isFriend(String uid) async {
+  //   //kiểm tra collection field
+  //   CollectionReference checkCollection = FirebaseFirestore.instance
+  //       .collection('users')
+  //       .doc(uid)
+  //       .collection('friends');
+  //   QuerySnapshot snapshot = await checkCollection.get();
+  //   if (snapshot.size == 0) {
+  //     print('dont have collection field');
+  //     return true;
+  //   } else {
+  //     //kiểm tra user có tồn tại trong list friend?
+  //     CollectionReference checkUser = FirebaseFirestore.instance
+  //         .collection('users')
+  //         .doc(uid)
+  //         .collection('friends');
+  //     DocumentSnapshot<Object?> snapshot1 =
+  //         await checkUser.doc(FirebaseAuth.instance.currentUser!.uid).get();
+  //     if (snapshot1.exists) {
+  //       print('is friend');
+  //       return false;
+  //     } else {
+  //       print('isnt friend');
+  //       return true;
+  //     }
+  //   }
+  // }
+
+//download file
+Future downloadFile (var file) async{
+  final url = file.url;
+  final tempDir = await getExternalStorageDirectory();
+  //máy thật
+  final path = '${tempDir!.path}/${file.name}'+'${file.extension}';
+  //máy ảo
+  //final path = '/storage/emulated/0/Download/${file.name}'+'${file.extension}';
+  print(path);
+  await Dio().download(
+      url,
+      path
+  );
+  print('ok');
+}
