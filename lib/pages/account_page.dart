@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:chatonline/gpt/screens/chat_screen.dart';
 import 'package:chatonline/models/user_models.dart';
 import 'package:chatonline/pages/pages.dart';
 import 'package:chatonline/widget/color_setting.dart';
@@ -81,6 +82,11 @@ class _AccountPageState extends State<AccountPage> {
                           ),
                       ],
                     ),
+                  ),
+                  ListViewWidget.base(title: 'ChatGPT', colorIcon: BaseColor.black80, icon: Icon(Icons.info_outline),
+                      voidCallback: (){
+                        nextScreen(context, ChatScreen());
+                      }
                   ),
                   ListViewWidget.base(title: 'Update information', colorIcon: BaseColor.black80, icon: Icon(Icons.info_outline),
                       voidCallback: (){

@@ -6,6 +6,7 @@ import 'package:chatonline/models/models.dart';
 import 'package:chatonline/service/auth_service.dart';
 import 'package:chatonline/widget/navigator_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -167,17 +168,21 @@ removeMessage(String cid, String mesID) async{
 }
 
 Future<bool> checkPermission() async {
-  final status = await Permission.storage.status;
-  if (status == PermissionStatus.granted){
-    return true;
-  }
-  if (status != PermissionStatus.granted) {
-    final result = await Permission.storage.request();
-    if (result == PermissionStatus.granted) {
+  DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+  AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+  if (androidInfo.version.sdkInt <= 33){
+    final status = await Permission.storage.status;
+    if (status == PermissionStatus.granted){
       return true;
     }
+    if (status != PermissionStatus.granted) {
+      final result = await Permission.storage.request();
+      if (result == PermissionStatus.granted) {
+        return true;
+      }
+    }
   }
-  return false;
+  return true;
 }
 
 Future prepareDownload(var file, context) async {
